@@ -35,20 +35,15 @@ const TaskCard = ({ task, onEdit, onDelete, isDragging }) => {
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition group ${
+      {...attributes}
+      {...listeners}
+      className={`bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition group cursor-grab active:cursor-grabbing ${
         isDragging ? "shadow-xl rotate-1 scale-105" : ""
-      }`}
+      } ${isSortableDragging ? "opacity-40" : ""}`}
     >
-      {/* Drag Handle + Priority */}
+      {/* Priority Badge */}
       <div className="flex items-center justify-between mb-2">
-        <span
-          {...attributes}
-          {...listeners}
-          className="text-slate-300 hover:text-slate-500 cursor-grab active:cursor-grabbing text-lg select-none"
-          title="Drag to move"
-        >
-          ⠿
-        </span>
+        <span className="text-slate-300 text-lg select-none">⠿</span>
         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${priorityStyles[task.priority]}`}>
           {task.priority}
         </span>
@@ -75,14 +70,16 @@ const TaskCard = ({ task, onEdit, onDelete, isDragging }) => {
         {/* Action Buttons */}
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
           <button
-            onClick={() => onEdit(task)}
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); onEdit(task); }}
             className="p-1.5 text-xs text-blue-600 hover:bg-blue-50 rounded-lg transition"
             title="Edit task"
           >
             ✏️
           </button>
           <button
-            onClick={() => onDelete(task.id)}
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); onDelete(task.id); }}
             className="p-1.5 text-xs text-red-500 hover:bg-red-50 rounded-lg transition"
             title="Delete task"
           >

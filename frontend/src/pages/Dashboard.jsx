@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import { getTasks, createTask, updateTask, deleteTask, updateTaskStage } from "../services/taskApi";
+import {
+  getTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+  updateTaskStage,
+} from "../services/taskApi";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import StatsCards from "../components/StatsCards";
 import TaskColumn from "../components/TaskColumn";
 import TaskModal from "../components/TaskModal";
+import TaskCard from "../components/TaskCard";
 import {
   DndContext,
   DragOverlay,
@@ -14,7 +21,6 @@ import {
   useSensors,
   closestCorners,
 } from "@dnd-kit/core";
-import TaskCard from "../components/TaskCard";
 
 const STAGES = ["Todo", "In Progress", "Done"];
 
@@ -29,7 +35,9 @@ const Dashboard = () => {
   const [filterPriority, setFilterPriority] = useState("");
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 3 },
+    })
   );
 
   useEffect(() => {
@@ -97,16 +105,23 @@ const Dashboard = () => {
     const { active, over } = event;
     setActiveTask(null);
     if (!over) return;
+
     const taskId = active.id;
     const newStage = over.id;
+
     if (!STAGES.includes(newStage)) return;
+
     const task = tasks.find((t) => t.id === taskId);
     if (!task || task.stage === newStage) return;
+
+    // Optimistic update
     setTasks((prev) =>
       prev.map((t) => (t.id === taskId ? { ...t, stage: newStage } : t))
     );
+
     try {
       await updateTaskStage(taskId, newStage);
+      toast.success(`Moved to ${newStage}!`);
     } catch (error) {
       toast.error("Failed to update task stage");
       fetchTasks();
@@ -114,8 +129,12 @@ const Dashboard = () => {
   };
 
   const filteredTasks = tasks.filter((task) => {
-    const matchSearch = task.title.toLowerCase().includes(search.toLowerCase());
-    const matchPriority = filterPriority ? task.priority === filterPriority : true;
+    const matchSearch = task.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const matchPriority = filterPriority
+      ? task.priority === filterPriority
+      : true;
     return matchSearch && matchPriority;
   });
 
