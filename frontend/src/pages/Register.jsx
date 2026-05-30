@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { login } from "../services/authApi";
+import { register } from "../services/authApi";
 import { useAuth } from "../context/AuthContext";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -18,20 +22,25 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
+    if (!formData.name || !formData.email || !formData.password) {
       toast.error("Please fill in all fields");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
     try {
       setLoading(true);
-      const data = await login(formData);
+      const data = await register(formData);
       localStorage.setItem("token", data.token);
       setUser(data.user);
-      toast.success("Welcome back!");
+      toast.success("Account created successfully!");
       navigate("/dashboard");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -43,12 +52,26 @@ const Login = () => {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Welcome back</h1>
-          <p className="text-slate-500 mt-2">Sign in to your account</p>
+          <h1 className="text-3xl font-bold text-slate-900">Create account</h1>
+          <p className="text-slate-500 mt-2">Start managing your tasks today</p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Full Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="John Doe"
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            />
+          </div>
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
@@ -73,7 +96,7 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="••••••••"
+              placeholder="Min. 6 characters"
               className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             />
           </div>
@@ -83,16 +106,16 @@ const Login = () => {
             disabled={loading}
             className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-2.5 rounded-lg transition duration-200"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Creating account..." : "Create Account"}
           </button>
 
         </form>
 
         {/* Footer */}
         <p className="text-center text-sm text-slate-500 mt-6">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-blue-600 font-medium hover:underline">
-            Sign up
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 font-medium hover:underline">
+            Sign in
           </Link>
         </p>
 
@@ -101,4 +124,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
