@@ -4,8 +4,10 @@ A full-stack Task Manager application built as part of an internship assessment.
 
 ## 🌐 Live Demo
 
-- **Frontend:** [Coming Soon - Vercel]
-- **Backend:** [Coming Soon - Render]
+## Live Demo
+
+- Frontend: https://skillful-heart-production.up.railway.app
+- Backend: https://task-manager-production-b762.up.railway.app
 
 ---
 
