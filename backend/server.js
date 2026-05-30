@@ -11,10 +11,10 @@ const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
-// Connect to MySQL
-connectDB();
-
 const app = express();
+
+// Connect to MySQL (async)
+connectDB();
 
 // ─── Security Middleware ────────────────────────────────────────────────────
 app.use(helmet());
