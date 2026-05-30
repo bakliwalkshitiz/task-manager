@@ -88,9 +88,7 @@ task-manager/
 │ │ │ └── taskApi.js
 │ │ ├── App.jsx
 │ │ └── main.jsx
-│ ├── .env
 │ └── package.json
-│
 └── backend/
 ├── config/
 │ └── db.js
@@ -108,10 +106,7 @@ task-manager/
 │ └── taskRoutes.js
 ├── utils/
 │ └── generateToken.js
-├── .env
 └── server.js
-
----
 
 ## 🗄️ Database Schema
 
