@@ -66,47 +66,67 @@ A full-stack Task Manager application built as part of an internship assessment.
 
 ## 📁 Folder Structure
 
+## 📁 Folder Structure
+
+```bash
 task-manager/
+│
 ├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ │ ├── Navbar.jsx
-│ │ │ ├── StatsCards.jsx
-│ │ │ ├── TaskCard.jsx
-│ │ │ ├── TaskColumn.jsx
-│ │ │ └── TaskModal.jsx
-│ │ ├── context/
-│ │ │ └── AuthContext.jsx
-│ │ ├── pages/
-│ │ │ ├── Login.jsx
-│ │ │ ├── Register.jsx
-│ │ │ └── Dashboard.jsx
-│ │ ├── routes/
-│ │ │ └── ProtectedRoute.jsx
-│ │ ├── services/
-│ │ │ ├── authApi.js
-│ │ │ └── taskApi.js
-│ │ ├── App.jsx
-│ │ └── main.jsx
-│ └── package.json
-└── backend/
-├── config/
-│ └── db.js
-├── controllers/
-│ ├── authController.js
-│ └── taskController.js
-├── middleware/
-│ ├── authMiddleware.js
-│ └── errorMiddleware.js
-├── models/
-│ ├── User.js
-│ └── Task.js
-├── routes/
-│ ├── authRoutes.js
-│ └── taskRoutes.js
-├── utils/
-│ └── generateToken.js
-└── server.js
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── StatsCards.jsx
+│   │   │   ├── TaskCard.jsx
+│   │   │   ├── TaskColumn.jsx
+│   │   │   └── TaskModal.jsx
+│   │   │
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   └── Dashboard.jsx
+│   │   │
+│   │   ├── routes/
+│   │   │   └── ProtectedRoute.jsx
+│   │   │
+│   │   ├── services/
+│   │   │   └── authApi.js
+│   │   │
+│   │   ├── taskApi.js
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   └── package.json
+│
+├── backend/
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   └── taskController.js
+│   │
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   └── errorMiddleware.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   └── Task.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   └── taskRoutes.js
+│   │
+│   ├── utils/
+│   │   └── generateToken.js
+│   │
+│   └── server.js
+│
+└── package.json
+```
 
 ## 🗄️ Database Schema
 
